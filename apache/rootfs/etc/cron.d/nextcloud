@@ -1,0 +1,1 @@
+*/5 * * * * www-data /beheer/scripts/nextcloud-cron.sh

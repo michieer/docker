@@ -1,0 +1,13 @@
+/var/log/messages
+/var/log/qnap/mail.log 
+{
+  daily
+  missingok
+  rotate 3
+  compress
+  delaycompress
+  notifempty
+  postrotate
+     /etc/init.d/syslog-ng restart > /dev/null
+  endscript
+}

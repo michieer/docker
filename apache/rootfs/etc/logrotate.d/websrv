@@ -1,0 +1,26 @@
+/var/log/messages
+/var/log/qnap/asbb-access.log
+/var/log/qnap/asbb-error.log
+/var/log/qnap/home-access.log
+/var/log/qnap/home-error.log
+/var/log/qnap/nc-access.log
+/var/log/qnap/nc-error.log
+/var/log/qnap/rc-access.log
+/var/log/qnap/rc-error.log
+/var/log/qnap/sm-access.log
+/var/log/qnap/sm-error.log
+/var/log/qnap/www-access.log
+/var/log/qnap/www-error.log
+/var/log/qnap/php8.1-fpm.log
+/var/nextcloud/data/nextcloud.log
+{
+        daily
+        missingok
+        rotate 3
+        compress
+        delaycompress
+        notifempty
+        postrotate
+          /etc/init.d/syslog-ng restart > /dev/null
+        endscript
+}
