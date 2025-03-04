@@ -1,0 +1,39 @@
+#!/bin/bash
+
+BASE="debian"
+PRE="deb"
+VERSION="latest"
+NAME=`hostname`
+
+# Locations
+DOCKER_BASE="/share/Docker"
+DOCKER_SRC="$DOCKER_BASE/images/$BASE"
+DOCKER_CFG="$DOCKER_BASE/containers"
+DOCKER_LOG="$DOCKER_MG/log/docker.log"
+LOGFILE="$DOCKER_MG/log/cron.log"
+
+TSTAMP=`date "+%Y-%m-%d %T"`
+echo "$TSTAMP Docker rebuild images/containers" >> $LOGFILE
+
+# Get latest Debian image
+docker pull ${BASE}:${VERSION}
+#docker pull mariadb:latest
+# Get latest pi-hole image
+#docker pull pihole/pihole
+
+# Generate all images
+cd $DOCKER_SRC/base
+docker build --rm=true --no-cache -t ${PRE}-base:$VERSION .
+echo "$BASE base build" > $DOCKER_LOG
+
+cd $DOCKER_SRC/mail
+docker build --rm=true --no-cache -t ${PRE}-mail:$VERSION .
+echo "Mail build" >> $DOCKER_LOG
+
+cd $DOCKER_SRC/apache
+docker build --rm=true --no-cache -t ${PRE}-apache:$VERSION .
+echo "Apache build" >> $DOCKER_LOG
+
+cd $DOCKER_SRC/mariadb
+docker build --rm=true --no-cache -t ${PRE}-mariadb:$VERSION .
+echo "Mysql build" >> $DOCKER_LOG
